@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cameraSwitch : MonoBehaviour
+public class CameraSwitch : MonoBehaviour
 {
 
     [SerializeField] private bool perspSwitch = false;
