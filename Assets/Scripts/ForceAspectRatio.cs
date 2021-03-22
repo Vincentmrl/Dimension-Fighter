@@ -9,9 +9,9 @@ public class ForceAspectRatio : MonoBehaviour
     {
         
         float targetAspect = 16.0f / 9.0f;
-
         float windowAspect = (float)Screen.width / (float)Screen.height;
 
+        // Control if window respects target aspect ratio
         float ScaleHeight = windowAspect / targetAspect;
 
         Camera mainCam = GetComponent<Camera>();
@@ -19,6 +19,7 @@ public class ForceAspectRatio : MonoBehaviour
         // Get width and height of camera
         Rect forceAspectCamera = mainCam.rect;
 
+        // If 
         if (ScaleHeight < 1.0f)
         {
 
