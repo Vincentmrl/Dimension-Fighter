@@ -30,9 +30,9 @@ public class EnemyController : MonoBehaviour
         enemy3D = this.gameObject.transform.GetChild(0);
 
         // Give a random spawn position, movement speed and fire rate to the enemy
-        float enemyPosX = Random.Range(-8.4f, 8.4f);
-        float EnemyPosY = Random.Range(0f, 4.5f); 
-        enemyMovementSpeed = Random.Range(-10f, 10f);
+        float enemyPosX = Random.Range(-14f, 14f);
+        float EnemyPosY = Random.Range(0f, 5.4f); 
+        enemyMovementSpeed = Random.Range(-8f, 8f);
         currentFireRate = Random.Range(enemyMinFireRate, enemyMaxFireRate);
 
         // Position the enemy on the spawn value
@@ -50,15 +50,15 @@ public class EnemyController : MonoBehaviour
         transform.Translate(new Vector3(enemyMovementSpeed, 0f, 0f) * Time.deltaTime);
 
         // Make sure the enemy doesn't go over the screen boundaries and teleport it to the other side
-        if(transform.position.x < -8.5f)
+        if(transform.position.x < -15f)
         {
-            transform.position = new Vector2(8.4f, transform.position.y);
+            transform.position = new Vector2(14.9f, transform.position.y);
 
         }
 
-          if(transform.position.x > 8.5f)
+          if(transform.position.x > 15f)
         { 
-            transform.position = new Vector2(-8.4f, transform.position.y);
+            transform.position = new Vector2(-14.9f, transform.position.y);
         }
 
     }

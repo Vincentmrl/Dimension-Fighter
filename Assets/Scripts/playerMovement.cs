@@ -88,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         // Make sure the player is within the gameplay range
-        player3D.transform.position = new Vector3(Mathf.Clamp(player3D.transform.position.x, -8.4f, 8.4f), Mathf.Clamp(player3D.transform.position.y, -5f, 4.5f), Mathf.Clamp(player3D.transform.position.z, 8f, 16f));      
+        player3D.transform.position = new Vector3(Mathf.Clamp(player3D.transform.position.x, -14f, 14f), Mathf.Clamp(player3D.transform.position.y, -7.6f, 7.6f), Mathf.Clamp(player3D.transform.position.z, 8f, 16f));      
         // player2D takes the same X and Y coordinates as player3D 
         player2D.transform.position = new Vector2(player3D.transform.position.x, player3D.transform.position.y);
         }
