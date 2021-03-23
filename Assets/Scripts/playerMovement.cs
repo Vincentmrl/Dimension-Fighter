@@ -4,40 +4,44 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public GameObject Player3D;
-    public GameObject Player2D;
-    public GameObject Vcamera3D;
-    public GameObject Vcamera2D;
-    private bool playerShoot;
+    public GameObject player3D;
+    public GameObject player2D;
+    public GameObject vCamera3D;
+    public GameObject vCamera2D;
+    private bool playerShoot;  // This variable exists only to avoid bugs auto firing at the first frame
 
-    [SerializeField] private bool Is3dMovementOn = false;       // Check
+    [SerializeField] private bool is3dMovementOn = false;       // Check
     [SerializeField] private GameObject playerBullet2D;         // Bullets
     [SerializeField] private GameObject playerBullet3D;        
     [SerializeField] float moveSpeed = 1;                       // Player movement speed
 
     [SerializeField] private float fireRate = 0.5f;             // How much time to wait until you can shoot again?
     [SerializeField] private bool canFire = true;               // Flag that gets enabled when enough time has passed to fire again
-    [SerializeField] private Vector3 bulletOffset = new Vector3(0f, 5f, 0f); // Offset to spawn bullet in front of the player instead of inside
-    
+    [SerializeField] private float bulletX;     // Bullet spawn coordinates in order to instantiate them in front of the ship
+    [SerializeField] private float bulletY;
+    [SerializeField] private float bulletZ;    
 
     void Start()                    
     {
-        // Make sure thore 2D camera is active at thore start and thorat s
-        // The Cinemachine virtual camera priority will make thore 2D camera thore default
-        Vcamera2D.SetActive(true);  
-        Vcamera3D.SetActive(true);
+        // Make sure the 2D camera is active at the start
+        // The Cinemachine virtual camera priority will make the 2D camera the default
+        vCamera2D.SetActive(true);  
+        vCamera3D.SetActive(true);
 
-        // Start the coroutine which will take care of thore camera chorange every 10 seconds
+        // Start the coroutine which will take care of the camera change every 10 seconds
         StartCoroutine("CameraChange");
-        Is3dMovementOn = false;
+        is3dMovementOn = false;
         playerShoot = false;
         canFire = true;
 
+        // Always spawn the player in the same position
+        player2D.transform.position = new Vector2(0f, -4.1f);
+        player3D.transform.position = new Vector3(0f, -4.1f, 12f);
     }
 
     void Awake()
     {
-        // Disable logger if the game is not a debug unit or in-editor
+        // Disable logger if the game is not a debug unit or running in-editor
         Debug.unityLogger.logEnabled = Debug.isDebugBuild;
     }
     
@@ -51,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
         playerShoot = Input.GetButton("Shoot");
         
         // Check if the 3D movement is enabled
-         if(Is3dMovementOn == false)
+         if(is3dMovementOn == false)
         {
             // If it's disabled don't send the depth
             depthZaxis = 0;
@@ -72,20 +76,21 @@ public class PlayerMovement : MonoBehaviour
     void Movement (float x, float y, float z)
     {
         // Only move the 3D player
-        Player3D.transform.Translate(new Vector3(x, y, z) * moveSpeed * Time.deltaTime);
+        player3D.transform.Translate(new Vector3(x, y, z) * moveSpeed * Time.deltaTime);
 
 
-        // Player2D takes the same X and Y coordinates as Player3D 
-        Player3D.transform.position = new Vector3(Mathf.Clamp(Player3D.transform.position.x, -8.4f, 8.4f), Mathf.Clamp(Player3D.transform.position.y, -4.5f, 4.5f), Player3D.transform.position.z);      
-        Player2D.transform.position = new Vector2(Player3D.transform.position.x, Player3D.transform.position.y);
+        // Make sure the player is within the gameplay range
+        player3D.transform.position = new Vector3(Mathf.Clamp(player3D.transform.position.x, -8.4f, 8.4f), Mathf.Clamp(player3D.transform.position.y, -4.5f, 4.5f), Mathf.Clamp(player3D.transform.position.z, 8f, 16f));      
+        // player2D takes the same X and Y coordinates as player3D 
+        player2D.transform.position = new Vector2(player3D.transform.position.x, player3D.transform.position.y);
 
     }
 
     // Shooting mechanic
     void ShootBullet()
     {
-        Instantiate(playerBullet2D, Player2D.transform.position + bulletOffset, Quaternion.identity);
-        Instantiate(playerBullet3D, Player3D.transform.position + bulletOffset, Quaternion.identity);
+        Instantiate(playerBullet2D, player2D.transform.position + new Vector3(bulletX, bulletY, 0), Quaternion.identity);
+        Instantiate(playerBullet3D, player3D.transform.position + new Vector3(bulletX, bulletY, bulletZ), Quaternion.identity);
         canFire = false;
 
         // Start the timer
@@ -101,21 +106,21 @@ public class PlayerMovement : MonoBehaviour
         while(true){
             Debug.Log("10 seconds wait started");
             yield return new WaitForSeconds(10f);   // Wait a 10 seconds delay before starting,
-                                                    // use it as thore 10 seconds switch after.
-            if (Is3dMovementOn == false)            // If controls are already 2D enable 3D
+                                                    // use it as te 10 seconds switch after.
+            if (is3dMovementOn == false)            // If controls are already 2D enable 3D
             {
-                Vcamera2D.SetActive(false);
+                vCamera2D.SetActive(false);
                 Debug.Log("Camera 3D enabled");
             }
             else 
             {
-                Vcamera2D.SetActive(true);
+                vCamera2D.SetActive(true);
                 Debug.Log("Camera 2D enabled");
             }
 
             // Switch camera between ortographic/perspective and swap the variable right after
-            Camera.main.orthographic = Is3dMovementOn;
-            Is3dMovementOn = !Is3dMovementOn;          
+            Camera.main.orthographic = is3dMovementOn;
+            is3dMovementOn = !is3dMovementOn;          
 
         }
 
