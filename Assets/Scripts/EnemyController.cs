@@ -18,6 +18,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float enemybulletZ;
     private Transform enemy3D;
 
+    [SerializeField] private GameObject playerControllerObject;
+
 
 
 
@@ -80,8 +82,12 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other){
 
-        if(other.tag == "PlayerBullet")
+        if(other.tag == "PlayerBullet2D")
         {
+            Debug.Log("Enemy killed, destroying");
+            GameObject.Find("PlayerController").GetComponent<PlayerScore>().IncreaseScore();
+           
+
             Destroy(other.gameObject);
             Destroy(gameObject);
 

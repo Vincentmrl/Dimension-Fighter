@@ -20,5 +20,20 @@ public class MainMenuControl : MonoBehaviour
 
     }
 
+    public void LoadMenu()
+    {
+        // Loads the main menu
+        SceneManager.LoadScene("Main Menu");
+
+    }
+
+    public void ReloadLevel()
+    {
+        // Reloads the level
+        SceneManager.LoadScene("GameLevel");
+        
+    }
+
+
 
 }

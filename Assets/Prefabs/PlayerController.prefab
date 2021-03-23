@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5989627072063079210}
   - component: {fileID: 5989627072063079213}
-  - component: {fileID: 5989627072063079211}
+  - component: {fileID: 47574241}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -44,24 +44,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18192d77c7a45744bc8622f2ae8075f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
-  Player3D: {fileID: 0}
-  Player2D: {fileID: 0}
-  Vcamera3D: {fileID: 0}
-  Vcamera2D: {fileID: 0}
-  Is3dMovementOn: 1
---- !u!114 &5989627072063079211
+  player3D: {fileID: 0}
+  player2D: {fileID: 0}
+  vCamera3D: {fileID: 0}
+  vCamera2D: {fileID: 0}
+  is3dMovementOn: 0
+  playerAlive: 1
+  playerBullet2D: {fileID: 8078575742235370128, guid: 62827f05c7b12d94c9ad2950831c8cec, type: 3}
+  playerBullet3D: {fileID: 5442258751639301468, guid: 8928e79aa9ab6c145b151903883aaec5, type: 3}
+  moveSpeed: 4
+  fireRate: 0.2
+  canFire: 1
+  bulletX: 0
+  bulletY: 0.8
+  bulletZ: 0.2
+--- !u!114 &47574241
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5989627072063079212}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f81cd26887516e48bf9b6ad757c7fd8, type: 3}
+  m_Script: {fileID: 11500000, guid: ec2774131669d9d4195df0723b0cba04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Vcamera3D: {fileID: 0}
-  Vcamera2D: {fileID: 0}
-  perspSwitch: 0
+  score: 0
+  scoreUI: {fileID: 0}
+  gameOverScreen: {fileID: 0}

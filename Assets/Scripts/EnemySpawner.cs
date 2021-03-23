@@ -20,13 +20,22 @@ public class EnemySpawner : MonoBehaviour
     IEnumerator SpawnEnemy()
     {
 
-        // Spawn until the player dies
-        while(player2dExists.scene.IsValid() && player3dExists.scene.IsValid())
+        // Spawn enemies...
+        while(true)
         {
         yield return new WaitForSeconds(enemySpawnSpeed);
 
         Instantiate(enemyObject);
+
         };
+    }
+        //...until the player is dead
+
+    public void PlayerIsDead()
+    {
+
+        StopAllCoroutines();
+
     }
 
 }

@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Player3D
   - Player2D
+  - Enemy
+  - PlayerBullet3D
+  - PlayerBullet2D
+  - EnemyBullet3D
+  - EnemyBullet2D
   layers:
   - Default
   - TransparentFX
